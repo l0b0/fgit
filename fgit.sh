@@ -131,6 +131,7 @@ do
         dir=$(dirname $git_dir)
         cd $dir
         IFS="$ifs_original"
+        echo "${PWD}\$ git ${cmd}"
         git $cmd
         cd - >/dev/null
     done
