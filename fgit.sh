@@ -10,10 +10,13 @@
 #    fgit.sh pull
 #        Run `git pull` in all the repositories under the current directory.
 #
-#    fgit.sh pull ~/dev /foo
-#        Run `git pull` in all the repositories under ~/dev and /foo.
+#    fgit.sh status -s -- ~/dev /foo
+#        Run `git status -s` in all the repositories under ~/dev and /foo.
 #
 # DESCRIPTION
+#    The script looks for repositories one level below the supplied
+#    directories, if any. Non-existing directories are ignored.
+#
 #    To be able to run this as simply `fgit`, you can either create a
 #    symbolic link to it (`ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
 #    alias in .bashrc or .bash_aliases (`alias fgit='/path/to/fgit.sh'`).
@@ -113,24 +116,23 @@ dirs=$*
 # Default to current subdirectories
 if [ -z "$dirs" ]
 then
-    dirs=*
+    dirs=.
 fi
 
 for dir in $dirs
 do
-	if [ ! -d "$dir" ]
-	then
-	    continue
-	fi
+    if [ ! -d "$dir" ]
+    then
+        continue
+    fi
 
-	find $dir -maxdepth 1 -name .git -print0 | while read -d $'\0' git_dir
-	do
-		dir=$(dirname $git_dir)
-        echo "Running git ${cmd} in $dir"
-		cd $dir
-		IFS="$ifs_original"
-		git $cmd
-		cd - >/dev/null
-	done
+    find ${dir%\/}/* -maxdepth 1 -name .git -print0 | while read -d $'\0' git_dir
+    do
+        dir=$(dirname $git_dir)
+        cd $dir
+        IFS="$ifs_original"
+        git $cmd
+        cd - >/dev/null
+    done
 done
 IFS="$ifs_original"
