@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 #
 # NAME
-#    fgit.sh - Run a Git command in several directories
+#    fgit.sh - Run a Git command in several repositories
 #
 # SYNOPSIS
 #    fgit.sh <Git command> [directories]
 #
 # EXAMPLES
 #    fgit.sh pull
-#        Run `git pull` in all the repositories in the current directory.
+#        Run `git pull` in all the repositories under the current directory.
 #
-#    fgit.sh pull ~/dev
-#        Run `git pull` in all the repositories under ~/dev.
+#    fgit.sh pull ~/dev /foo
+#        Run `git pull` in all the repositories under ~/dev and /foo.
 #
 # DESCRIPTION
 #    To be able to run this as simply `fgit`, you can either create a
@@ -105,7 +105,8 @@ do
             ;;
     esac
 done
-IFS="$ifs_original"
+cmd=${cmd% }
+IFS=$(echo -en "\n\b")
 
 dirs=$*
 
@@ -122,12 +123,14 @@ do
 	    continue
 	fi
 
-	for git_dir in $(find $dir -maxdepth 2 -name .git)
+	find $dir -maxdepth 1 -name .git -print0 | while read -d $'\0' git_dir
 	do
 		dir=$(dirname $git_dir)
-        echo "Running git ${cmd}in $dir"
+        echo "Running git ${cmd} in $dir"
 		cd $dir
+		IFS="$ifs_original"
 		git $cmd
 		cd - >/dev/null
 	done
 done
+IFS="$ifs_original"
