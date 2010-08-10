@@ -4,7 +4,7 @@
 #    fgit.sh - Run a Git command in several repositories
 #
 # SYNOPSIS
-#    fgit.sh <Git command> [directories]
+#    fgit.sh <Git command> [-- directories]
 #
 # EXAMPLES
 #    fgit.sh pull
@@ -15,7 +15,8 @@
 #
 # DESCRIPTION
 #    The script looks for repositories one level below the supplied
-#    directories, if any. Non-existing directories are ignored.
+#    directories, if any. If no directory is supplied, the current directory
+#    is used. Non-existing directories are ignored.
 #
 #    To be able to run this as simply `fgit`, you can either create a
 #    symbolic link to it (`ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
