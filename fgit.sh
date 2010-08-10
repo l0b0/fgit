@@ -60,12 +60,14 @@ error()
     # Return to origin
     cd $directory
 
-    # Output error message
-    test -t 1 && {
+    # Output error message (in color if supported)
+    test -t 1 \
+    && {
         tput setf 4
         echo "$1" >&2
         tput setf 7
-    } || echo "$1" >&2
+    } \
+    || echo "$1" >&2
 
     # Exit
     if [ -z "$2" ]
