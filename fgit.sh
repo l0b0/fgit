@@ -112,6 +112,11 @@ do
     esac
 done
 cmd=${cmd% }
+if [ -z "$cmd" ]
+then
+    usage
+fi
+
 IFS=$(echo -en "\n\b")
 
 dirs=$*
