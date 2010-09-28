@@ -59,7 +59,7 @@ EX_UNKNOWN=1
 error()
 {
     # Return to origin
-    cd $directory
+    cd "$directory"
 
     # Output error message (in color if supported)
     test -t 1 \
@@ -82,7 +82,7 @@ error()
 usage()
 {
     # Return to origin
-    cd $directory
+    cd "$directory"
 
     # Print documentation until the first empty line
     while read line
@@ -136,8 +136,8 @@ do
 
     find ${dir%\/}/* -maxdepth 1 -name .git -print0 | while read -d $'\0' git_dir
     do
-        dir=$(dirname $git_dir)
-        cd $dir
+        dir=$(dirname "$git_dir")
+        cd "$dir"
         IFS="$ifs_original"
         echo "${PWD}\$ git ${cmd}"
         git $cmd
