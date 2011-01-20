@@ -49,10 +49,6 @@
 
 set -o errexit
 set -o nounset
-ifs_original="$IFS"
-PATH='/usr/bin:/bin'
-cmdname=$(basename $0)
-directory=$(dirname $0)
 
 # Exit codes from /usr/include/sysexits.h, as recommended by
 # http://www.faqs.org/docs/abs/HTML/exitcodes.html
@@ -61,93 +57,118 @@ EX_USAGE=64
 # Custom errors
 EX_UNKNOWN=1
 
-# Output error message with optional error code
+declare -r help='See documentation for more information.'
+
+warning()
+{
+    # Output warning messages
+    # Color the output red if it's an interactive terminal
+    # @param $1...: Messages
+
+    test -t 1 && tput setf 4
+
+    while [ -n "${1:-}" ]
+    do
+        echo -E "$1" >&2
+        shift
+    done
+
+    test -t 1 && tput sgr0 # Reset terminal
+}
+
 error()
 {
-    # Return to origin
-    cd "$directory"
+    # Output error messages with optional exit code
+    # @param $1...: Messages
+    # @param $N: Exit code (optional)
 
-    # Output error message (in color if supported)
-    test -t 1 \
-    && {
-        tput setf 4
-        echo "$1" >&2
-        tput setf 7
-    } \
-    || echo "$1" >&2
+    local -a messages=( "$@" )
 
-    # Exit
-    if [ -z "$2" ]
+    # If the last parameter is a number, it's not part of the messages
+    local -r last_parameter="${@: -1}"
+    if [[ "$last_parameter" =~ ^[0-9]*$ ]]
     then
-        exit $EX_UNKNOWN
-    else
-        exit $2
+        local -r exit_code=$last_parameter
+        unset messages[$((${#messages[@]} - 1))]
     fi
+
+    warning "${messages[@]}"
+
+    exit ${exit_code:-$EX_UNKNOWN}
 }
 
 usage()
 {
-    # Return to origin
-    cd "$directory"
-
     # Print documentation until the first empty line
+    local line
     while read line
     do
         if [ ! "$line" ]
         then
-            exit $EX_USAGE
+            exit
+        elif [ "${line:0:2}" == '#!' ]
+        then
+            # Shebang line
+            continue
         fi
-        echo "$line"
-    done < $0
+        echo -E "${line:2}" # Remove comment characters
+    done < "$0"
 }
 
+if [ "$#" -eq 0 ]
+then
+    error 'No input' "$help" $EX_USAGE
+fi
+
 # Process parameters
-IFS=' '
-cmd=''
-while [ -n "$1" ]
+declare -a dirs
+while [ -n "${1:-}" ]
 do
     case $1 in
         --)
             shift
+            dirs=("${@}")
             break
             ;;
         *)
-            cmd="${cmd}$1 "
+            cmd="${cmd:-}$1 "
             shift
             ;;
     esac
 done
-cmd=${cmd% }
+cmd=${cmd% } # Remove last space
+
 if [ -z "$cmd" ]
 then
-    usage
+    error 'No command given.' "$help" $EX_USAGE
 fi
 
-IFS=$(echo -en "\n\b")
-
-dirs=$*
-
-# Default to current subdirectories
-if [ -z "$dirs" ]
+if [ "$#" -ne 0 ]
 then
-    dirs=.
+    dirs=("${@}")
+else
+    # Default to current directory
+    dirs[0]=.
 fi
 
-for dir in $dirs
+for directory in "${dirs[@]}"
 do
+    dir="$(readlink -fn -- "$directory"; echo x)"
+    dir="${dir%x}"
+
     if [ ! -d "$dir" ]
     then
         continue
     fi
 
-    find ${dir%\/}/* -maxdepth 1 -name .git -print0 | while read -d $'\0' git_dir
+    while IFS= read -rd $'\0' git_dir
     do
-        dir=$(dirname "$git_dir")
-        cd "$dir"
-        IFS="$ifs_original"
+        # Handle really weird directory names
+        dir="$(dirname -- "$(readlink -fn -- "$git_dir"; echo x)")"
+        dir="${dir%x}"
+
+        cd -- "$dir"
         echo "${PWD}\$ git ${cmd}"
         git $cmd
-        cd - >/dev/null
-    done
+    done < <( find ${dir%\/}/* -maxdepth 1 -name .git -print0 )
 done
-IFS="$ifs_original"
