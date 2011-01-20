@@ -47,6 +47,8 @@
 #
 ################################################################################
 
+set -o errexit
+set -o nounset
 ifs_original="$IFS"
 PATH='/usr/bin:/bin'
 cmdname=$(basename $0)
