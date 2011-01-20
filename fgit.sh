@@ -6,13 +6,6 @@
 # SYNOPSIS
 #    fgit.sh <Git command> [-- directories]
 #
-# EXAMPLES
-#    fgit.sh pull
-#        Run `git pull` in all the repositories under the current directory.
-#
-#    fgit.sh status -s -- ~/dev /foo
-#        Run `git status -s` in all the repositories under ~/dev and /foo.
-#
 # DESCRIPTION
 #    The script looks for repositories one level below the supplied
 #    directories, if any. If no directory is supplied, the current directory
@@ -22,11 +15,22 @@
 #    symbolic link to it (`ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
 #    alias in .bashrc or .bash_aliases (`alias fgit='/path/to/fgit.sh'`).
 #
+# EXAMPLES
+#    fgit.sh pull -- ~ ~/dev
+#        Run `git pull` in all the repositories under ~ and ~/dev.
+#
+#    fgit.sh gc --aggressive
+#        Run `git gc --aggressive` in all the repositories under the current
+#        directory.
+#
+#    fgit.sh status -s -- ~/dev
+#        Run `git status -s` in all the repositories under ~/dev.
+#
 # BUGS
 #    Email bugs to victor dot engmark at gmail dot com.
 #
 # COPYRIGHT AND LICENSE
-#    Copyright (C) 2010 Victor Engmark
+#    Copyright (C) 2010-2011 Victor Engmark
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
