@@ -153,10 +153,10 @@ fi
 
 for directory in "${dirs[@]}"
 do
-    dir="$(readlink -fn -- "$directory"; echo x)"
-    dir="${dir%x}"
+    directory_path="$(readlink -fn -- "$directory"; echo x)"
+    directory_path="${directory_path%x}"
 
-    if [ ! -d "$dir" ]
+    if [ ! -d "$directory_path" ]
     then
         continue
     fi
@@ -164,11 +164,11 @@ do
     while IFS= read -rd $'\0' git_dir
     do
         # Handle really weird directory names
-        dir="$(dirname -- "$(readlink -fn -- "$git_dir"; echo x)")"
-        dir="${dir%x}"
+        git_dir_path="$(dirname -- "$(readlink -fn -- "$git_dir"; echo x)")"
+        git_dir_path="${git_dir_path%x}"
 
-        cd -- "$dir"
+        cd -- "$git_dir_path"
         echo "${PWD}\$ git ${cmd}"
         git $cmd
-    done < <( find ${dir%\/}/* -maxdepth 1 -name .git -print0 )
+    done < <( find "${directory_path%\/}" -mindepth 2 -maxdepth 2 -name .git -print0 )
 done

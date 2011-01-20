@@ -6,57 +6,42 @@ oneTimeSetUp()
 {
     declare -r directory="$(dirname -- "$(readlink -f -- "$0")")"
 
-    # Weird filename fragment to test quoting / escaping
-    # Remember that only forward slash (/) and the null character cannot be part
-    # of a filename
-    # "A -- signals the end of options and disables further option processing."
-    # man bash
+    # Weird filename
     declare -r test_filename=$'--$`\! *@ \a\b\e\E\f\r\t\v\\\"\' \n'
 
-    outputDir="${__shunit_tmpDir}/output"
-    mkdir "${outputDir}"
-    stdout_file="${outputDir}/stdout"
-    stderr_file="${outputDir}/stderr"
-    
+    test_dir="${__shunit_tmpDir}/${test_filename}"
+    mkdir -- "${test_dir}" || exit 1
+    stdout_file="${test_dir}/stdout"
+    stderr_file="${test_dir}/stderr"
+
+    # Command to test
     cmd="${directory}/fgit.sh"
+    test -x "$cmd" || exit 1
+    
+    # Repositories
+    repos_parent="${test_dir}/repos"
+    repos_dirs='foo bar'
+    for repos_dir in $repos_dirs
+    do
+        git init -- "${repos_parent}/${repos_dir}" || exit 1
+    done
 }
 
 
 tearDown()
 {
-    rm -f -- "${outputDir}/stdout" "${outputDir}/stderr"
+    rm -f -- "${test_dir}/stdout" "${test_dir}/stderr"
 }
 
 
-test_help()
+test_status()
 {
-    "${cmd}" -h > >(tee "${stdout_file}") 2> >(tee "${stderr_file}" >&2)
+    "${cmd}" status -- "${repos_parent}" > >(tee "${stdout_file}") 2> >(tee "${stderr_file}" >&2)
     exit_code=$?
     assertEquals 'Wrong exit code' 0 $exit_code
     assertNotNull 'Expected output to stdout' "$(cat "${stdout_file}")"
     assertNull 'Unexpected output to stderr' "$(cat "${stderr_file}")"
-
-    "${cmd}" --help -- "$source" > >(tee "${stdout_file}") 2> >(tee "${stderr_file}" >&2)
-    exit_code=$?
-    assertEquals 'Wrong exit code' 0 $exit_code
-    assertNotNull 'Expected output to stdout' "$(cat "${stdout_file}")"
-    assertNull 'Unexpected output to stderr' "$(cat "${stderr_file}")"
-
-    assertEquals 'Missing files' $test_days "$(file_count "$source")"
 }
-
-
-# Create repository
-
-
-# Add contents
-
-
-# Test status
-
-
-# Test
-
 
 # load and run shunit-ng
 test -n "${ZSH_VERSION:-}" && SHUNIT_PARENT=$0
