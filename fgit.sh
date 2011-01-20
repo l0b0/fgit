@@ -12,7 +12,7 @@
 #    is used. Non-existing directories are ignored.
 #
 #    To be able to run this as simply `fgit`, you can either create a
-#    symbolic link to it (`ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
+#    symbolic link to it (`sudo ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
 #    alias in .bashrc or .bash_aliases (`alias fgit='/path/to/fgit.sh'`).
 #
 # EXAMPLES
