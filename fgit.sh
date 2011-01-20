@@ -164,8 +164,7 @@ do
     while IFS= read -rd $'\0' git_dir
     do
         # Handle really weird directory names
-        git_dir_path="$(dirname -- "$(readlink -fn -- "$git_dir"; echo x)")"
-        git_dir_path="${git_dir_path%x}"
+        git_dir_path="$(dirname -- "$(readlink -fn -- "$git_dir")")"
 
         cd -- "$git_dir_path"
         echo "${PWD}\$ git ${cmd}"
