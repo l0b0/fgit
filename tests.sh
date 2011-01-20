@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#
+# Test fgit.sh
 
 #set -o errexit # Enable when shunit works with it
 set -o nounset
