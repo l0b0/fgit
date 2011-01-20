@@ -27,7 +27,7 @@
 #        Run `git status -s` in all the repositories under ~/dev.
 #
 # BUGS
-#    Email bugs to victor dot engmark at gmail dot com.
+#    https://github.com/l0b0/fgit/issues
 #
 # COPYRIGHT AND LICENSE
 #    Copyright (C) 2010-2011 Victor Engmark
