@@ -161,13 +161,20 @@ do
         continue
     fi
 
-    while IFS= read -rd $'\0' git_dir
+    while IFS= read -rd $'\0' git_config_dir
     do
         # Handle really weird directory names
-        git_dir_path="$(dirname -- "$(readlink -fn -- "$git_dir")")"
+        git_config_dir_path="$(readlink -fn -- "$git_config_dir"; echo x)"
+        git_config_dir_path="${git_config_dir_path%x}"
 
-        cd -- "$git_dir_path"
-        echo "${PWD}\$ git ${cmd}"
+        git_repo_dir="$(dirname -- "$git_config_dir_path"; echo x)"
+        git_repo_dir="${git_repo_dir%
+x}"
+
+        cd -- "$git_repo_dir"
+
+        echo "${PWD}\$ git ${cmd}" # Show what we're doing
+
         git $cmd
     done < <( find "$directory_path" -mindepth 2 -maxdepth 2 -name .git -print0 )
 done
