@@ -169,5 +169,5 @@ do
         cd -- "$git_dir_path"
         echo "${PWD}\$ git ${cmd}"
         git $cmd
-    done < <( find "${directory_path%\/}" -mindepth 2 -maxdepth 2 -name .git -print0 )
+    done < <( find "$directory_path" -mindepth 2 -maxdepth 2 -name .git -print0 )
 done
