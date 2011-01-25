@@ -175,6 +175,8 @@ x}"
 
         echo "${PWD}\$ git ${cmd}" # Show what we're doing
 
+        set +o errexit
         git $cmd
+        set -o errexit
     done < <( find "$directory_path" -mindepth 2 -maxdepth 2 -name .git -print0 )
 done
