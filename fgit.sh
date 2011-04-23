@@ -111,7 +111,7 @@ usage()
             # Shebang line
             continue
         fi
-        echo -E "${line:2}" # Remove comment characters
+        echo "${line:2}" # Remove comment characters
     done < "$0"
 }
 
