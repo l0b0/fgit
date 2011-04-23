@@ -20,14 +20,14 @@
 #
 # EXAMPLES
 #    fgit.sh pull -- ~ ~/dev
-#        Run `git pull` in all the repositories under ~ and ~/dev.
+#        Run `git pull` in all the repositories in ~ and ~/dev.
 #
 #    fgit.sh gc --aggressive
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
 #
 #    fgit.sh status -s -- ~/dev
-#        Run `git status -s` in all the repositories under ~/dev.
+#        Run `git status -s` in all the repositories in ~/dev.
 #
 # BUGS
 #    https://github.com/l0b0/fgit/issues
