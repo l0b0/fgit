@@ -121,7 +121,6 @@ then
 fi
 
 # Process parameters
-declare -a dirs
 while [ -n "${1:-}" ]
 do
     case $1 in
@@ -146,15 +145,7 @@ then
     usage $EX_USAGE
 fi
 
-if [ $# -ne 0 ]
-then
-    dirs=("${@}")
-else
-    # Default to current directory
-    dirs[0]=.
-fi
-
-for directory in "${dirs[@]}"
+for directory in "${@:-.}"
 do
     directory_path="$(readlink -fn -- "$directory"; echo x)"
     directory_path="${directory_path%x}"
