@@ -15,6 +15,9 @@
 #    symbolic link to it (`sudo ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
 #    alias in .bashrc or .bash_aliases (`alias fgit='/path/to/fgit.sh'`).
 #
+#    -h, --help
+#           Output this documentation.
+#
 # EXAMPLES
 #    fgit.sh pull -- ~ ~/dev
 #        Run `git pull` in all the repositories under ~ and ~/dev.
@@ -57,7 +60,7 @@ EX_USAGE=64
 # Custom errors
 EX_UNKNOWN=1
 
-declare -r help='See documentation for more information.'
+declare -r help_info="Try \`$(basename -- "$0") --help\` for more information."
 
 warning()
 {
@@ -113,7 +116,7 @@ usage()
 
 if [ "$#" -eq 0 ]
 then
-    error 'No input' "$help" $EX_USAGE
+    error 'No input' "$help_info" $EX_USAGE
 fi
 
 # Process parameters
@@ -140,7 +143,7 @@ cmd=${cmd% } # Remove last space
 
 if [ -z "$cmd" ]
 then
-    error 'No command given.' "$help" $EX_USAGE
+    error 'No command given.' "$help_info" $EX_USAGE
 fi
 
 if [ $# -ne 0 ]
