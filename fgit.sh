@@ -99,12 +99,13 @@ error()
 usage()
 {
     # Print documentation until the first empty line
+    # @param $1: Exit code (optional)
     local line
     while IFS= read line
     do
-        if [ ! "$line" ]
+        if [ -z "$line" ]
         then
-            exit
+            exit ${1:-0}
         elif [ "${line:0:2}" == '#!' ]
         then
             # Shebang line
@@ -116,7 +117,7 @@ usage()
 
 if [ "$#" -eq 0 ]
 then
-    error 'No input' "$help_info" $EX_USAGE
+    usage $EX_USAGE
 fi
 
 # Process parameters
@@ -143,7 +144,7 @@ cmd=${cmd% } # Remove last space
 
 if [ -z "$cmd" ]
 then
-    error 'No command given.' "$help_info" $EX_USAGE
+    usage $EX_USAGE
 fi
 
 if [ $# -ne 0 ]
