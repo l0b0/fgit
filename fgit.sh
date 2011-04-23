@@ -97,7 +97,7 @@ usage()
 {
     # Print documentation until the first empty line
     local line
-    while read line
+    while IFS= read line
     do
         if [ ! "$line" ]
         then
@@ -143,7 +143,7 @@ then
     error 'No command given.' "$help" $EX_USAGE
 fi
 
-if [ "$#" -ne 0 ]
+if [ $# -ne 0 ]
 then
     dirs=("${@}")
 else
