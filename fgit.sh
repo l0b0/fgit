@@ -131,7 +131,6 @@ do
             ;;
         --)
             shift
-            dirs=("${@}")
             break
             ;;
         *)
