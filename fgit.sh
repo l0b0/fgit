@@ -121,6 +121,10 @@ declare -a dirs
 while [ -n "${1:-}" ]
 do
     case $1 in
+        -h|--help)
+            usage
+            exit 0
+            ;;
         --)
             shift
             dirs=("${@}")
