@@ -121,6 +121,7 @@ then
 fi
 
 # Process parameters
+declare -a cmd
 while [ -n "${1:-}" ]
 do
     case $1 in
@@ -133,14 +134,13 @@ do
             break
             ;;
         *)
-            cmd="${cmd:-}$1 "
+            cmd+=( "$1" )
             shift
             ;;
     esac
 done
-cmd=${cmd% } # Remove last space
 
-if [ -z "$cmd" ]
+if [ -z "${cmd[@]}" ]
 then
     usage $EX_USAGE
 fi
@@ -167,10 +167,13 @@ x}"
 
         cd -- "$git_repo_dir"
 
-        echo "${PWD}\$ git ${cmd}" # Show what we're doing
+        # Print the command
+        printf %s "${PWD}\$ git "
+        printf "\"%s\" " "${cmd[@]}"
+        printf '\n'
 
         set +o errexit
-        git $cmd
+        git "${cmd[@]}"
         set -o errexit
     done < <( find "$directory_path" -mindepth 2 -maxdepth 2 -name .git -print0 )
 done
