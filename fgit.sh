@@ -140,7 +140,7 @@ do
     esac
 done
 
-if [ -z "${cmd[@]}" ]
+if [ -z "${cmd[*]}" ]
 then
     usage $EX_USAGE
 fi
