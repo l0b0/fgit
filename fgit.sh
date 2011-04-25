@@ -149,6 +149,7 @@ for directory in "${@:-.}"
 do
     if [ ! -d "${directory}/.git" ]
     then
+        warning "Not a Git repository top directory: $directory"
         continue
     fi
 
