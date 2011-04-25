@@ -169,7 +169,7 @@ x}"
 
         # Print the command
         printf %s "${PWD}\$ git "
-        printf "\"%s\" " "${cmd[@]}"
+        printf "%q " "${cmd[@]}"
         printf '\n'
 
         set +o errexit
