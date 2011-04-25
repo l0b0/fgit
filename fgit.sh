@@ -147,33 +147,19 @@ fi
 
 for directory in "${@:-.}"
 do
-    directory_path="$(readlink -fn -- "$directory"; echo x)"
-    directory_path="${directory_path%x}"
-
-    if [ ! -d "$directory_path" ]
+    if [ ! -d "${directory}/.git" ]
     then
         continue
     fi
 
-    while IFS= read -rd $'\0' git_config_dir
-    do
-        # Handle really weird directory names
-        git_config_dir_path="$(readlink -fn -- "$git_config_dir"; echo x)"
-        git_config_dir_path="${git_config_dir_path%x}"
+    cd -- "$directory"
 
-        git_repo_dir="$(dirname -- "$git_config_dir_path"; echo x)"
-        git_repo_dir="${git_repo_dir%
-x}"
+    # Print the command
+    printf %s "${PWD}\$ git "
+    printf "%q " "${cmd[@]}"
+    printf '\n'
 
-        cd -- "$git_repo_dir"
-
-        # Print the command
-        printf %s "${PWD}\$ git "
-        printf "%q " "${cmd[@]}"
-        printf '\n'
-
-        set +o errexit
-        git "${cmd[@]}"
-        set -o errexit
-    done < <( find "$directory_path" -mindepth 2 -maxdepth 2 -name .git -print0 )
+    set +o errexit
+    git "${cmd[@]}"
+    set -o errexit
 done
