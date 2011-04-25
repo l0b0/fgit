@@ -55,8 +55,6 @@ EX_USAGE=64
 # Custom errors
 EX_UNKNOWN=1
 
-declare -r help_info="Try \`$(basename -- "$0") --help\` for more information."
-
 warning()
 {
     # Output warning messages
