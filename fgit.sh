@@ -7,9 +7,8 @@
 #    fgit.sh <Git command> [-- directories]
 #
 # DESCRIPTION
-#    The script looks for repositories one level below the supplied
-#    directories, if any. If no directory is supplied, the current directory
-#    is used. Non-existing directories are ignored.
+#    Run a Git command in the specified directories which contain a .git
+#    directory.
 #
 #    To be able to run this as simply `fgit`, you can either create a
 #    symbolic link to it (`sudo ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
@@ -19,14 +18,14 @@
 #           Output this documentation.
 #
 # EXAMPLES
-#    fgit.sh pull -- ~ ~/dev
+#    fgit.sh pull -- ~/* ~/dev/*
 #        Run `git pull` in all the repositories in ~ and ~/dev.
 #
 #    fgit.sh gc --aggressive
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
 #
-#    fgit.sh status -s -- ~/dev
+#    fgit.sh status -s -- ~/dev/*
 #        Run `git status -s` in all the repositories in ~/dev.
 #
 # BUGS
@@ -145,7 +144,7 @@ then
     usage $EX_USAGE
 fi
 
-for directory in "${@:-.}"
+for directory
 do
     if [ ! -d "${directory}/.git" ]
     then
@@ -163,4 +162,6 @@ do
     set +o errexit
     git "${cmd[@]}"
     set -o errexit
+
+    cd - >/dev/null
 done
