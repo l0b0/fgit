@@ -135,8 +135,9 @@ do
     esac
 done
 
-if [ -z "${cmd[*]}" ]
+if [ -z "${cmd:-}" -o $# -eq 0 ]
 then
+    # Without a command or directories it's a no-operation
     usage $EX_USAGE
 fi
 
