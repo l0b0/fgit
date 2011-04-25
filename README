@@ -1,1 +1,5 @@
-Folder Git - Run a Git command in several directories
+Folder Git - Run a Git command in several repositories
+
+For full command-line documentation, run `fgit.sh --help`.
+
+Tests need [[Shunit-NG|https://github.com/l0b0/shunit-ng]] to run.
