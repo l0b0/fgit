@@ -4,15 +4,11 @@
 #    fgit.sh - Run a Git command in several repositories
 #
 # SYNOPSIS
-#    fgit.sh <Git command> [-- directories]
+#    fgit.sh COMMAND -- PATH ...
 #
 # DESCRIPTION
-#    Run a Git command in the specified directories which contain a .git
-#    directory.
-#
-#    To be able to run this as simply `fgit`, you can either create a
-#    symbolic link to it (`sudo ln -s /path/to/fgit.sh /usr/bin/fgit`) or an
-#    alias in .bashrc or .bash_aliases (`alias fgit='/path/to/fgit.sh'`).
+#    Run a Git command, optionally with parameters, in those of the
+#    specified PATHs which are Git repository top-level directories.
 #
 #    -h, --help
 #           Output this documentation.
