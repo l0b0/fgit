@@ -45,8 +45,7 @@
 #
 ################################################################################
 
-set -o errexit
-set -o nounset
+set -o errexit -o noclobber -o nounset -o pipefail
 
 # Exit codes from /usr/include/sysexits.h, as recommended by
 # http://www.faqs.org/docs/abs/HTML/exitcodes.html
