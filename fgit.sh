@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # NAME
 #    fgit.sh - Run a Git command in several repositories
