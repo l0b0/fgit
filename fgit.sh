@@ -60,11 +60,11 @@ warning()
     # Color the output red if it's an interactive terminal
     # @param $1...: Messages
 
-    test -t 1 && tput setf 4
+    test -t 1 && tput setf 4 || true
 
     printf '%s\n' "$@" >&2
 
-    test -t 1 && tput sgr0 # Reset terminal
+    test -t 1 && tput sgr0 || true # Reset terminal
 }
 
 error()
