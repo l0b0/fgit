@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 #
 # NAME
-#    fgit.sh - Run a Git command in several repositories
+#    fgit - Run a Git command in several repositories
 #
 # SYNOPSIS
-#    fgit.sh COMMAND -- PATH ...
+#    fgit <command> [<options>] -- <path>...
 #
 # DESCRIPTION
 #    Run a Git command, optionally with parameters, in those of the
-#    specified PATHs which are Git repository top-level directories.
+#    specified paths which are Git repository top-level directories.
 #
 #    -h, --help
-#           Output this documentation.
+#           Output this documentation rather than Git's help.
 #
 # EXAMPLES
-#    fgit.sh pull -- ~/* ~/dev/*
+#    fgit pull -- ~/* ~/dev/*
 #        Run `git pull` in all the repositories in ~ and ~/dev.
 #
-#    fgit.sh gc --aggressive
+#    fgit gc --aggressive
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
 #
-#    fgit.sh status -s -- ~/dev/*
+#    fgit status -s -- ~/dev/*
 #        Run `git status -s` in all the repositories in ~/dev.
 #
 # BUGS
