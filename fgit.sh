@@ -17,7 +17,7 @@
 #    fgit pull -- ~/* ~/dev/*
 #        Run `git pull` in all the repositories in ~ and ~/dev.
 #
-#    fgit gc --aggressive
+#    fgit gc --aggressive -- */
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
 #
