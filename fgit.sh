@@ -14,14 +14,14 @@
 #           Output this documentation rather than Git's help.
 #
 # EXAMPLES
-#    fgit pull -- ~/* ~/dev/*
+#    fgit pull -- ~/*/ ~/dev/*/
 #        Run `git pull` in all the repositories in ~ and ~/dev.
 #
 #    fgit gc --aggressive -- */
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
 #
-#    fgit status -s -- ~/dev/*
+#    fgit status -s -- ~/dev/*/
 #        Run `git status -s` in all the repositories in ~/dev.
 #
 # BUGS
