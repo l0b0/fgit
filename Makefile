@@ -1,6 +1,8 @@
 PREFIX = /usr/local/bin
-FILE_PATH = $(CURDIR)/fgit.sh
-INSTALL_FILE_PATH = $(PREFIX)/fgit
+
+SCRIPT = $(notdir $(CURDIR)).sh
+FILE_PATH = $(CURDIR)/$(SCRIPT)
+INSTALL_FILE_PATH = $(PREFIX)/$(basename $(SCRIPT))
 
 .PHONY: test
 test:
