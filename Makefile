@@ -6,10 +6,8 @@ INSTALL_FILE_PATH = $(PREFIX)/fgit
 test:
 	$(CURDIR)/tests.sh
 
-$(INSTALL_FILE_PATH):
-	cp $(FILE_PATH) $(INSTALL_FILE_PATH)
-
 .PHONY: install
-install: $(INSTALL_FILE_PATH)
+install:
+	cp $(FILE_PATH) $(INSTALL_FILE_PATH)
 
 include tools.mk
