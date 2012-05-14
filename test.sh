@@ -58,8 +58,7 @@ oneTimeSetUp() {
 
 test_status() {
     "$cmd" status -- "$repos_parent"/* > "$stdout_file" 2> "$stderr_file"
-    exit_code=$?
-    assertEquals 'Wrong exit code' 0 $exit_code
+    assertEquals 'Wrong exit code' 0 $?
     assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
     assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
 }
@@ -67,8 +66,7 @@ test_status() {
 test_parameter() {
     "$cmd" status --short  -- "$repos_parent"/* \
         > "$stdout_file" 2> "$stderr_file"
-    exit_code=$?
-    assertEquals 'Wrong exit code' 0 $exit_code
+    assertEquals 'Wrong exit code' 0 $?
     assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
     assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
 }
@@ -78,8 +76,7 @@ test_file_found() {
     touch -- "${repos_dirs[0]}/${filename}"
     "$cmd" status --short  -- "$repos_parent"/* \
         > "$stdout_file" 2> "$stderr_file"
-    exit_code=$?
-    assertEquals 'Wrong exit code' 0 $exit_code
+    assertEquals 'Wrong exit code' 0 $?
     assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
     assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
 
