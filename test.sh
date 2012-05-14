@@ -86,4 +86,4 @@ test_file_found() {
 
 # load and run shunit-ng
 test -n "${ZSH_VERSION:-}" && SHUNIT_PARENT=$0
-. shunitng
+. /usr/share/shunit2/shunit2
