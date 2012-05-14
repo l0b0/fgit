@@ -24,7 +24,6 @@
 #
 ################################################################################
 
-#set -o errexit # Enable when shunit works with it
 set -o nounset
 
 declare -r directory="$(dirname -- "$(readlink -f -- "$0")")"
