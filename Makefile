@@ -6,7 +6,7 @@ INSTALL_FILE_PATH = $(PREFIX)/$(basename $(SCRIPT))
 
 .PHONY: test
 test:
-	$(CURDIR)/tests.sh
+	$(CURDIR)/test.sh
 
 .PHONY: install
 install:
