@@ -24,36 +24,36 @@
 #
 ################################################################################
 
-set -o nounset
-
-declare -r directory="$(dirname -- "$(readlink -f -- "$0")")"
-
-# Command to test
-declare -r cmd="${directory}/fgit.sh"
-
-# Weird filename
-declare -r test_filename=$'--$`\! *@ \a\b\e\E\f\r\t\v\\\"\' \n'
+declare -r directory=$(dirname $(readlink -f "$0"))
+declare -r cmd="${directory}/$(basename "$directory").sh"
+declare -r test_name=$'--$`!*@\a\b\E\f\r\t\v\\\'\"\360\240\202\211 \n'
 
 declare -a repos_dirs
 
 oneTimeSetUp() {
-    test -x "$cmd" || exit 1
-
-    # Test directories and files
-    test_dir="${__shunit_tmpDir}/${test_filename}"
-    mkdir -- "$test_dir" || exit 1
+    test_dir="${__shunit_tmpDir}/${test_name}"
 
     stdout_file="${test_dir}/stdout"
     stderr_file="${test_dir}/stderr"
-
     repos_parent="${test_dir}/repos"
 
     for repos_name in foo bar "$test_name"
     do
-        repos_dir="${repos_parent}/${repos_name}"
-        repos_dirs+=( "$repos_dir" )
-        git init -- "${repos_dir}" || exit 1
+        repos_dirs+=( "${repos_parent}/${repos_name}" )
     done
+}
+
+setUp() {
+    mkdir -- "$test_dir" || exit 1
+
+    for repos_dir in "${repos_dirs[@]}"
+    do
+        git init -- "$repos_dir" >/dev/null || exit 1
+    done
+}
+
+tearDown() {
+    rm -r -- "$test_dir"
 }
 
 test_status() {
