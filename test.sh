@@ -36,8 +36,7 @@ declare -r test_filename=$'--$`\! *@ \a\b\e\E\f\r\t\v\\\"\' \n'
 
 declare -a repos_dirs
 
-oneTimeSetUp()
-{
+oneTimeSetUp() {
     test -x "$cmd" || exit 1
 
     # Test directories and files
@@ -57,8 +56,7 @@ oneTimeSetUp()
     done
 }
 
-test_status()
-{
+test_status() {
     "$cmd" status -- "$repos_parent"/* > "$stdout_file" 2> "$stderr_file"
     exit_code=$?
     assertEquals 'Wrong exit code' 0 $exit_code
@@ -66,8 +64,7 @@ test_status()
     assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
 }
 
-test_parameter()
-{
+test_parameter() {
     "$cmd" status --short  -- "$repos_parent"/* \
         > "$stdout_file" 2> "$stderr_file"
     exit_code=$?
@@ -76,8 +73,7 @@ test_parameter()
     assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
 }
 
-test_file_found()
-{
+test_file_found() {
     filename='foobar'
     touch -- "${repos_dirs[0]}/${filename}"
     "$cmd" status --short  -- "$repos_parent"/* \
