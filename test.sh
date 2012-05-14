@@ -47,8 +47,8 @@ oneTimeSetUp() {
     stderr_file="${test_dir}/stderr"
 
     repos_parent="${test_dir}/repos"
-    repos_names=( foo bar "$test_filename" )
-    for repos_name in "${repos_names[@]}"
+
+    for repos_name in foo bar "$test_name"
     do
         repos_dir="${repos_parent}/${repos_name}"
         repos_dirs+=( "$repos_dir" )
