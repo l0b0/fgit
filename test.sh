@@ -59,16 +59,16 @@ oneTimeSetUp() {
 test_status() {
     "$cmd" status -- "$repos_parent"/* > "$stdout_file" 2> "$stderr_file"
     assertEquals 'Wrong exit code' 0 $?
-    assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
-    assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
+    assertTrue 'Expected output to stdout' "[ -s \"\$stdout_file\" ]"
+    assertFalse 'Unexpected output to stderr' "[ -s \"\$stderr_file\" ]"
 }
 
 test_parameter() {
     "$cmd" status --short  -- "$repos_parent"/* \
         > "$stdout_file" 2> "$stderr_file"
     assertEquals 'Wrong exit code' 0 $?
-    assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
-    assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
+    assertTrue 'Expected output to stdout' "[ -s \"\$stdout_file\" ]"
+    assertFalse 'Unexpected output to stderr' "[ -s \"\$stderr_file\" ]"
 }
 
 test_file_found() {
@@ -77,8 +77,8 @@ test_file_found() {
     "$cmd" status --short  -- "$repos_parent"/* \
         > "$stdout_file" 2> "$stderr_file"
     assertEquals 'Wrong exit code' 0 $?
-    assertNotNull 'Expected output to stdout' "$(cat "$stdout_file")"
-    assertNull 'Unexpected output to stderr' "$(cat "$stderr_file")"
+    assertTrue 'Expected output to stdout' "[ -s \"\$stdout_file\" ]"
+    assertFalse 'Unexpected output to stderr' "[ -s \"\$stderr_file\" ]"
 
     assertEquals "Should find $filename" "$filename" \
         "$(grep -oe "$filename" -- "$stdout_file")"
