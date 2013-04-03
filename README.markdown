@@ -8,7 +8,7 @@ Install
 
     sudo make install
 
-`make test` depends on [[Shunit-NG|https://github.com/l0b0/shunit-ng]].
+`make test` depends on `shunit2`.
 
 Usage
 -----
