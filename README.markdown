@@ -3,6 +3,14 @@ Folder Git
 
 Run a Git command in several repositories.
 
+Test
+----
+
+Requires `shunit2`.
+
+    git submodule update --init
+    make test
+
 Install
 -------
 
