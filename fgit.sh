@@ -107,11 +107,6 @@ usage()
     done < "$0"
 }
 
-if [ "$#" -eq 0 ]
-then
-    usage $EX_USAGE
-fi
-
 # Process parameters
 declare -a cmd
 while [ -n "${1:-}" ]
