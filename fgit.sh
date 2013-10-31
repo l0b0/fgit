@@ -28,7 +28,7 @@
 #    https://github.com/l0b0/fgit/issues
 #
 # COPYRIGHT AND LICENSE
-#    Copyright (C) 2010-2011 Victor Engmark
+#    Copyright (C) 2010-2013 Victor Engmark
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -47,65 +47,12 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-# Exit codes from /usr/include/sysexits.h, as recommended by
-# http://www.faqs.org/docs/abs/HTML/exitcodes.html
-EX_USAGE=64
-
-# Custom errors
-EX_UNKNOWN=1
-
-warning()
-{
-    # Output warning messages
-    # Color the output red if it's an interactive terminal
-    # @param $1...: Messages
-
-    test -t 1 && tput setf 4 || true
-
-    printf '%s\n' "$@" >&2
-
-    test -t 1 && tput sgr0 || true # Reset terminal
-}
-
-error()
-{
-    # Output error messages with optional exit code
-    # @param $1...: Messages
-    # @param $N: Exit code (optional)
-
-    local -a messages=( "$@" )
-
-    # If the last parameter is a number, it's not part of the messages
-    local -r last_parameter="${@: -1}"
-    if [[ "$last_parameter" =~ ^[0-9]*$ ]]
-    then
-        local -r exit_code=$last_parameter
-        unset messages[$((${#messages[@]} - 1))]
-    fi
-
-    warning "${messages[@]}"
-
-    exit ${exit_code:-$EX_UNKNOWN}
-}
-
-usage()
-{
-    # Print documentation until the first empty line
-    # @param $1: Exit code (optional)
-    local line
-    while IFS= read line
-    do
-        if [ -z "$line" ]
-        then
-            exit ${1:-0}
-        elif [ "${line:0:2}" == '#!' ]
-        then
-            # Shebang line
-            continue
-        fi
-        echo "${line:2}" # Remove comment characters
-    done < "$0"
-}
+includes="$(dirname -- "$0")"/shell-includes
+. "$includes"/error.sh
+. "$includes"/usage.sh
+. "$includes"/variables.sh
+. "$includes"/warning.sh
+unset includes
 
 # Process parameters
 declare -a cmd
@@ -130,7 +77,7 @@ done
 if [ -z "${cmd:-}" -o $# -eq 0 ]
 then
     # Without a command or directories it's a no-operation
-    usage $EX_USAGE
+    usage $ex_usage
 fi
 
 for directory
