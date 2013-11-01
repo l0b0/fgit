@@ -55,7 +55,7 @@ includes="$(dirname -- "$0")"/shell-includes
 unset includes
 
 # Process parameters
-declare -a cmd
+declare -a parameters
 while [ -n "${1:-}" ]
 do
     case $1 in
@@ -68,13 +68,13 @@ do
             break
             ;;
         *)
-            cmd+=( "$1" )
+            parameters+=( "$1" )
             shift
             ;;
     esac
 done
 
-if [ -z "${cmd:-}" -o $# -eq 0 ]
+if [ -z "${parameters:-}" -o $# -eq 0 ]
 then
     # Without a command or directories it's a no-operation
     usage $ex_usage
@@ -92,11 +92,11 @@ do
 
     # Print the command
     printf %s "${PWD}\$ git "
-    printf "%q " "${cmd[@]}"
+    printf "%q " "${parameters[@]}"
     printf '\n'
 
     set +o errexit
-    git "${cmd[@]}"
+    git "${parameters[@]}"
     set -o errexit
 
     cd - >/dev/null
