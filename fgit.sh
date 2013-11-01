@@ -96,8 +96,10 @@ do
     printf '\n'
 
     set +o errexit
-    git "${parameters[@]}"
+    git "${parameters[@]}" || exit_code=$?
     set -o errexit
 
     cd - >/dev/null
 done
+
+exit ${exit_code-0}
