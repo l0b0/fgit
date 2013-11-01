@@ -88,18 +88,15 @@ do
         continue
     fi
 
-    cd -- "$directory"
+    git_command=(git --work-tree="$directory" --git-dir="${directory}/.git" "${parameters[@]}")
 
     # Print the command
-    printf %s "${PWD}\$ git "
-    printf "%q " "${parameters[@]}"
+    printf "%q " "${git_command[@]}"
     printf '\n'
 
     set +o errexit
-    git "${parameters[@]}" || exit_code=$?
+    "${git_command[@]}" || exit_code=$?
     set -o errexit
-
-    cd - >/dev/null
 done
 
 exit ${exit_code-0}
