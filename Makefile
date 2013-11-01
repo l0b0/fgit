@@ -10,7 +10,7 @@ test:
 	$(CURDIR)/test.sh
 
 .PHONY: install
-install: $(INSTALL_FILE_PATH)
+install:
 	install $(SOURCE_PATH) $(TARGET_PATH)
 	sed -i -e 's/\(\.\/\)\?$(SOURCE_FILE)/$(TARGET_FILE)/g' $(TARGET_PATH)
 
