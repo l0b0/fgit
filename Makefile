@@ -1,9 +1,9 @@
 PREFIX = /usr/local/bin
 
-SOURCE_FILE = $(wildcard $(notdir $(CURDIR)).*)
-SOURCE_PATH = $(CURDIR)/$(SOURCE_FILE)
-TARGET_FILE = $(basename $(SOURCE_FILE))
-TARGET_PATH = $(PREFIX)/$(TARGET_FILE)
+source_file = $(wildcard $(notdir $(CURDIR)).*)
+source_path = $(CURDIR)/$(source_file)
+target_file = $(basename $(source_file))
+target_path = $(PREFIX)/$(target_file)
 
 .PHONY: test
 test:
@@ -11,7 +11,7 @@ test:
 
 .PHONY: install
 install:
-	install $(SOURCE_PATH) $(TARGET_PATH)
-	sed -i -e 's/\(\.\/\)\?$(SOURCE_FILE)/$(TARGET_FILE)/g' $(TARGET_PATH)
+	install $(source_path) $(target_path)
+	sed -i -e 's/\(\.\/\)\?$(source_file)/$(target_file)/g' $(target_path)
 
 include tools.mk
