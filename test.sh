@@ -86,13 +86,5 @@ test_file_found() {
 
 # load and run shunit-ng
 test -n "${ZSH_VERSION:-}" && SHUNIT_PARENT=$0
-for shunit2_path in /usr/bin/shunit2 /usr/share/shunit2/shunit2
-do
-    if [ -e "$shunit2_path" ]
-    then
-        . "$shunit2_path"
-        exit
-    fi
-done
-echo "$(basename -- "$0"): No shunit2 executable found" >&2
-exit 1
+shunit2="${shunit2-shunit2}"
+. "$shunit2"

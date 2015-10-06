@@ -1,8 +1,11 @@
 PREFIX = /usr/local
 
+CURL = /usr/bin/curl
 INSTALL = /usr/bin/install
 MKDIR = /usr/bin/mkdir
 SED = /usr/bin/sed
+
+SHUNIT2_VERSION = 2.1.6
 
 bin_directory = $(PREFIX)/bin
 share_directory = $(PREFIX)/share
@@ -14,8 +17,12 @@ source_file = $(wildcard $(name).*)
 source_path = $(CURDIR)/$(source_file)
 target_path = $(bin_directory)/$(name)
 
+shunit2_dir = shunit2-source
+shunit2 = $(shunit2_dir)/$(SHUNIT2_VERSION)/src/shunit2
+export shunit2
+
 .PHONY: test
-test:
+test: $(shunit2)
 	$(CURDIR)/test.sh
 
 .PHONY: install
@@ -25,7 +32,13 @@ install: $(include_directory)
 	$(SED) -i -e 's/\(\.\/\)\?$(source_file)/$(target_file)/g' $(target_path)
 	$(SED) -i -e 's#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
 
+$(shunit2):
+	$(CURL) --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar zx
+
 $(include_directory):
 	$(MKDIR) $(include_directory)
+
+clean:
+	$(RM) -r $(shunit2_dir)
 
 include tools.mk
