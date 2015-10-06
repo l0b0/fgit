@@ -41,4 +41,4 @@ $(include_directory):
 clean:
 	$(RM) --recursive $(shunit2_dir)
 
-include tools.mk
+include make-includes/variables.mk
