@@ -29,16 +29,16 @@ test: $(shunit2)
 install: $(include_directory)
 	$(INSTALL) $(source_path) $(target_path)
 	$(INSTALL) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh $(include_directory)
-	$(SED) -i -e 's/\(\.\/\)\?$(source_file)/$(target_file)/g' $(target_path)
-	$(SED) -i -e 's#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
+	$(SED) --in-place --expression='s/\(\.\/\)\?$(source_file)/$(target_file)/g' $(target_path)
+	$(SED) --in-place --expression='s#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
 
 $(shunit2):
-	$(CURL) --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar zx
+	$(CURL) --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
 
 $(include_directory):
 	$(MKDIR) $(include_directory)
 
 clean:
-	$(RM) -r $(shunit2_dir)
+	$(RM) --recursive $(shunit2_dir)
 
 include tools.mk
