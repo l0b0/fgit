@@ -33,7 +33,7 @@ install: $(include_directory)
 	$(SED) --in-place --expression='s#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
 
 $(shunit2):
-	$(CURL) --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
+	$(CURL) --silent --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
 
 $(include_directory):
 	$(MKDIR) $(include_directory)
