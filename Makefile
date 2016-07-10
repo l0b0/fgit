@@ -2,7 +2,6 @@ PREFIX = /usr/local
 
 CURL = /usr/bin/curl
 INSTALL = /usr/bin/install
-MKDIR = /usr/bin/mkdir
 SED = /usr/bin/sed
 
 SHUNIT2_VERSION = 2.1.6
@@ -27,16 +26,15 @@ test: $(shunit2)
 
 .PHONY: install
 install: $(include_directory)
-	$(INSTALL) $(source_path) $(target_path)
 	$(INSTALL) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh $(include_directory)
-	$(SED) --in-place --expression='s/\(\.\/\)\?$(source_file)/$(target_file)/g' $(target_path)
-	$(SED) --in-place --expression='s#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
+	$(INSTALL) $(source_path) $(target_path)
+	$(SED) 's#^\(includes=\).*#\1"$(include_directory)"#' $(source_path) > $(target_path)
 
 $(shunit2):
 	$(CURL) --silent --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
 
 $(include_directory):
-	$(MKDIR) $(include_directory)
+	mkdir $(include_directory)
 
 clean:
 	$(RM) --recursive $(shunit2_dir)
