@@ -26,16 +26,13 @@ test: $(shunit2)
 	$(CURDIR)/test.sh
 
 .PHONY: install
-install: $(include_directory)
-	$(INSTALL) $(source_path) $(target_path)
-	$(INSTALL) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh $(include_directory)
+install:
+	$(INSTALL) -D $(source_path) $(target_path)
+	$(INSTALL) -D --target-directory=$(include_directory) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh
 	$(SED) -i'' 's#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
 
 $(shunit2):
 	$(CURL) --silent --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
-
-$(include_directory):
-	$(MKDIR) $(include_directory)
 
 clean:
 	$(RM) --recursive $(shunit2_dir)
