@@ -1,2 +1,4 @@
 language: shell
-script: make test
+script:
+  - make test
+  - make PREFIX=pkg DESTDIR=/usr SED=/bin/sed install
