@@ -14,8 +14,7 @@ name = $(notdir $(CURDIR))
 include_directory = $(PREFIX)/share/$(name)
 include_destination_directory = $(DESTDIR)/share/$(name)
 
-source_file = $(wildcard $(name).*)
-source_path = $(CURDIR)/$(source_file)
+source_path = fgit.sh
 target_path = $(bin_directory)/$(name)
 
 shunit2_dir = shunit2-source
