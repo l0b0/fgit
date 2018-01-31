@@ -10,25 +10,25 @@
 #    Run a Git command, optionally with parameters, in those of the
 #    specified paths which are Git repository top-level directories.
 #
+#    Specifying `GLOB/.git/..` paths is an easy way to process only directories
+#    which contain a ".git" directory.
+#
 #    -h, --help
 #           Output this documentation rather than Git's help.
 #
 # EXAMPLES
-#    fgit pull -- ~/*/ ~/dev/*/
+#    fgit pull -- ~/*/.git/.. ~/dev/*/.git/..
 #        Run `git pull` in all the repositories in ~ and ~/dev.
 #
-#    fgit gc --aggressive -- */
+#    fgit gc --aggressive -- */.git/..
 #        Run `git gc --aggressive` in all the repositories under the current
 #        directory.
-#
-#    fgit status -s -- ~/dev/*/
-#        Run `git status -s` in all the repositories in ~/dev.
 #
 # BUGS
 #    https://github.com/l0b0/fgit/issues
 #
 # COPYRIGHT AND LICENSE
-#    Copyright (C) 2010-2013 Victor Engmark
+#    Copyright (C) 2010-2018 Victor Engmark
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
