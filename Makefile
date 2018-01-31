@@ -1,4 +1,5 @@
 PREFIX = /usr/local
+DESTDIR = $(PREFIX)
 
 CURL = /usr/bin/curl
 INSTALL = /usr/bin/install
@@ -8,10 +9,10 @@ SED = /usr/bin/sed
 SHUNIT2_VERSION = 2.1.6
 
 bin_directory = $(PREFIX)/bin
-share_directory = $(PREFIX)/share
 
 name = $(notdir $(CURDIR))
-include_directory = $(share_directory)/$(name)
+include_directory = $(PREFIX)/share/$(name)
+include_destination_directory = $(DESTDIR)/share/$(name)
 
 source_file = $(wildcard $(name).*)
 source_path = $(CURDIR)/$(source_file)
@@ -29,7 +30,7 @@ test: $(shunit2)
 install:
 	$(INSTALL) -D $(source_path) $(target_path)
 	$(INSTALL) -D --target-directory=$(include_directory) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh
-	$(SED) -i'' 's#^\(includes=\).*#\1"$(include_directory)"#' $(target_path)
+	$(SED) -i'' 's#^\(includes=\).*#\1"$(include_destination_directory)"#' $(target_path)
 
 $(shunit2):
 	$(CURL) --silent --location "https://github.com/kward/shunit2/archive/source.tar.gz" | tar --extract --gzip
