@@ -1,2 +1,2 @@
 language: shell
-script: make MKDIR=/bin/mkdir SED=/bin/sed test
+script: make test
