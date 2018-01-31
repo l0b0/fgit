@@ -4,14 +4,9 @@ DESTDIR = $(PREFIX)
 INSTALL = /usr/bin/install
 SED = /usr/bin/sed
 
-bin_directory = $(PREFIX)/bin
-
 name = $(notdir $(CURDIR))
-include_directory = $(PREFIX)/share/$(name)
-include_destination_directory = $(DESTDIR)/share/$(name)
 
-source_path = fgit.sh
-target_path = $(bin_directory)/$(name)
+target_path = $(PREFIX)/bin/$(name)
 
 .PHONY: test
 test:
@@ -19,8 +14,8 @@ test:
 
 .PHONY: install
 install:
-	$(INSTALL) -D $(source_path) $(target_path)
-	$(INSTALL) -D --target-directory=$(include_directory) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh
-	$(SED) -i'' 's#^\(includes=\).*#\1"$(include_destination_directory)"#' $(target_path)
+	$(INSTALL) -D fgit.sh $(target_path)
+	$(INSTALL) -D --target-directory=$(PREFIX)/share/$(name) shell-includes/error.sh shell-includes/usage.sh shell-includes/variables.sh shell-includes/warning.sh
+	$(SED) -i'' 's#^\(includes=\).*#\1"$(DESTDIR)/share/$(name)"#' $(target_path)
 
 include make-includes/variables.mk
