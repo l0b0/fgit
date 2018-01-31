@@ -47,7 +47,7 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-includes="$(dirname -- "$0")"/shell-includes
+includes="$(dirname -- "$0")"
 . "$includes"/error.sh
 . "$includes"/usage.sh
 . "$includes"/variables.sh

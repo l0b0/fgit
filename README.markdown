@@ -8,7 +8,6 @@ Run a Git command in several repositories.
 Test
 ----
 
-    git submodule update --init
     make test
 
 Install
