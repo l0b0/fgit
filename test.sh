@@ -7,7 +7,7 @@
 #    https://github.com/l0b0/fgit/issues
 #
 # COPYRIGHT AND LICENSE
-#    Copyright (C) 2011-2012 Victor Engmark
+#    Copyright (C) 2011-2018 Victor Engmark
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
