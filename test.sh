@@ -86,5 +86,4 @@ test_file_found() {
 
 # load and run shunit-ng
 test -n "${ZSH_VERSION:-}" && SHUNIT_PARENT=$0
-shunit2="${shunit2-shunit2}"
-. "$shunit2"
+. "${directory}/shunit2"
