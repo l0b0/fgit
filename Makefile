@@ -2,7 +2,6 @@ PREFIX = /usr/local
 DESTDIR = $(PREFIX)
 
 INSTALL = /usr/bin/install
-MKDIR = /usr/bin/mkdir
 SED = /usr/bin/sed
 
 bin_directory = $(PREFIX)/bin
