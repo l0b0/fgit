@@ -47,12 +47,74 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-includes="$(dirname -- "$0")"
-. "$includes"/error.sh
-. "$includes"/usage.sh
-. "$includes"/variables.sh
-. "$includes"/warning.sh
-unset includes
+error() {
+    printf '%s' "$(basename -- "$0"): " >&2
+
+    if [[ -t 1 ]]
+    then
+        tput setf 4 || tput setaf 1
+    fi
+
+    # If the last parameter is a number, it's not part of the messages
+    exit_code=1
+    while true
+    do
+        if [[ $# -eq 0 ]]
+        then
+            break
+        fi
+        if [[ $# -eq 1 ]]
+        then
+            case "$1" in
+                ''|*[!0-9]*)
+                    ;;
+                *)
+                    exit_code="$1"
+                    shift
+                    continue
+            esac
+        fi
+        printf '%s\n' "$1" >&2
+        shift
+    done
+
+    if [[ -t 1 ]]
+    then
+       tput sgr0 # Reset formatting
+    fi
+
+    exit "$exit_code"
+}
+
+usage() {
+    while IFS= read -r line || [[ -n "$line" ]]
+    do
+        case "$line" in
+            '#!'*) # Shebang line
+                ;;
+            ''|'##'*|[!#]*) # End of comments
+                exit "${1:-0}"
+                ;;
+            *) # Comment line
+                printf '%s\n' "$line" >&2 # Remove comment prefix
+                ;;
+        esac
+    done < "$0"
+}
+
+warning() {
+    if [[ -t 1 ]]
+    then
+        tput setf 4 || tput setaf 1
+    fi
+
+    printf '%s\n' "$@" >&2
+
+    if [[ -t 1 ]]
+    then
+       tput sgr0 # Reset formatting
+    fi
+}
 
 # Process parameters
 declare -a parameters
@@ -77,7 +139,7 @@ done
 if [[ -z "${parameters:-}" ]] || [[ $# -eq 0 ]]
 then
     # Without a command or directories it's a no-operation
-    usage $ex_usage
+    usage 64
 fi
 
 for directory
