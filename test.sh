@@ -31,7 +31,7 @@ declare -r test_name=$'--$`!*@\a\b\E\f\r\t\v\\\'\"\360\240\202\211 \n'
 declare -a repos_dirs
 
 oneTimeSetUp() {
-    test_dir="${__shunit_tmpDir}/${test_name}"
+    test_dir="${__shunit_tmpDir:?}/${test_name}"
 
     stdout_file="${test_dir}/stdout"
     stderr_file="${test_dir}/stderr"
