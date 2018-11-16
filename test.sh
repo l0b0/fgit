@@ -24,7 +24,8 @@
 #
 ################################################################################
 
-declare -r directory=$(dirname $(readlink -f "$0"))
+directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+declare -r directory
 declare -r cmd="${directory}/fgit.sh"
 declare -r test_name=$'--$`!*@\a\b\E\f\r\t\v\\\'\"\360\240\202\211 \n'
 
