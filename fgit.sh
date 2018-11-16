@@ -150,7 +150,7 @@ do
         continue
     fi
 
-    git_command=(git --work-tree="$directory" --git-dir="${directory}/.git" "${parameters[@]}")
+    git_command=(git "--work-tree=${directory}" "--git-dir=${directory}/.git" "${parameters[@]}")
 
     # Print the command
     printf "%q " "${git_command[@]}"
@@ -161,4 +161,4 @@ do
     set -o errexit
 done
 
-exit ${exit_code-0}
+exit "${exit_code-0}"
