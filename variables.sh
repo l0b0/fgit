@@ -52,4 +52,4 @@ ex_config=78      # Configuration error
 ex_unknown=1
 
 # Base name of the sourcing script
-script="`basename -- "$0"`"
+script="$(basename -- "$0")"
