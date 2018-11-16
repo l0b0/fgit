@@ -85,6 +85,4 @@ test_file_found() {
         "$(grep -oe "$filename" -- "$stdout_file")"
 }
 
-# load and run shunit-ng
-test -n "${ZSH_VERSION:-}" && SHUNIT_PARENT=$0
 . "${directory}/shunit2"
