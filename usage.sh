@@ -38,7 +38,7 @@
 ################################################################################
 
 usage() {
-    while IFS= read -r line || [ -n "$line" ]
+    while IFS= read -r line || [[ -n "$line" ]]
     do
         case "$line" in
             '#!'*) # Shebang line

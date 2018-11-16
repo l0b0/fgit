@@ -32,14 +32,14 @@
 ################################################################################
 
 warning() {
-    if [ -t 1 ]
+    if [[ -t 1 ]]
     then
         tput setf 4 || tput setaf 1
     fi
 
     printf '%s\n' "$@" >&2
 
-    if [ -t 1 ]
+    if [[ -t 1 ]]
     then
        tput sgr0 # Reset formatting
     fi

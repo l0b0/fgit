@@ -35,7 +35,7 @@
 error() {
     printf '%s' "$(basename -- "$0"): " >&2
 
-    if [ -t 1 ]
+    if [[ -t 1 ]]
     then
         tput setf 4 || tput setaf 1
     fi
@@ -44,11 +44,11 @@ error() {
     exit_code=1
     while true
     do
-        if [ $# -eq 0 ]
+        if [[ $# -eq 0 ]]
         then
             break
         fi
-        if [ $# -eq 1 ]
+        if [[ $# -eq 1 ]]
         then
             case "$1" in
                 ''|*[!0-9]*)
@@ -63,7 +63,7 @@ error() {
         shift
     done
 
-    if [ -t 1 ]
+    if [[ -t 1 ]]
     then
        tput sgr0 # Reset formatting
     fi

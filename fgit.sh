@@ -56,7 +56,7 @@ unset includes
 
 # Process parameters
 declare -a parameters
-while [ -n "${1:-}" ]
+while [[ -n "${1:-}" ]]
 do
     case $1 in
         -h|--help)
@@ -74,7 +74,7 @@ do
     esac
 done
 
-if [ -z "${parameters:-}" -o $# -eq 0 ]
+if [[ -z "${parameters:-}" ]] || [[ $# -eq 0 ]]
 then
     # Without a command or directories it's a no-operation
     usage $ex_usage
@@ -82,7 +82,7 @@ fi
 
 for directory
 do
-    if [ ! -d "${directory}/.git" ]
+    if [[ ! -d "${directory}/.git" ]]
     then
         warning "Not a Git repository top directory: $directory"
         continue
