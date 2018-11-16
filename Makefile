@@ -13,6 +13,10 @@ share_directory = $(PREFIX)/share/$(name)
 test:
 	$(CURDIR)/test.sh
 
+.PHONY: lint
+lint:
+	shellcheck *.sh
+
 .PHONY: install
 install:
 	$(INSTALL) -D fgit.sh $(target_path)

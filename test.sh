@@ -85,4 +85,5 @@ test_file_found() {
         "$(grep -oe "$filename" -- "$stdout_file")"
 }
 
+# shellcheck disable=SC1090
 . "${directory}/shunit2"
